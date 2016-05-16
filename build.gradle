@@ -1,0 +1,3 @@
+// This gradle file is the starting point for the gradle workshop and is incomplete
+
+apply plugin: 'java'
