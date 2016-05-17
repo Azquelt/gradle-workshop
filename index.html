@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Gradle-workshop by Azquelt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Gradle-workshop</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/Azquelt/gradle-workshop" class="btn">View on GitHub</a>
+      <a href="https://github.com/Azquelt/gradle-workshop/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Azquelt/gradle-workshop/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="setting-up" class="anchor" href="#setting-up" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setting up</h1>
+
+<p>We're going to set up the workshop by installing the buildship plugin and cloning the workshop repository from github. I'm using Eclipse Mars SR2 (4.5.2) and the latest version of buildship.</p>
+
+<h2>
+<a id="installing-buildship" class="anchor" href="#installing-buildship" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing buildship</h2>
+
+<ul>
+<li>Go to <em>Help</em> &gt; <em>Eclipse Marketplace...</em>
+</li>
+<li>Search for "<em>buildship</em>"</li>
+<li>Click the <em>Install</em> button</li>
+<li>Continue through the wizard, accepting the license</li>
+<li>Restart Eclipse when prompted</li>
+</ul>
+
+<h2>
+<a id="cloning-the-workshop" class="anchor" href="#cloning-the-workshop" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cloning the workshop</h2>
+
+<ul>
+<li>Click the Open perspective button</li>
+<li>Select the <em>Git</em> perspective</li>
+<li>Click the button to <em>Clone a Git Repository</em>
+</li>
+<li>Set the URI to <em>placeholder</em> and click <em>Next &gt;</em>
+</li>
+<li>Select the <em>master</em> branch and click <em>Next &gt;</em>
+</li>
+<li>Choose a directory to store the checked out code
+
+<ul>
+<li>this should <em>not</em> be in your eclipse workspace</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="importing-the-project" class="anchor" href="#importing-the-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Importing the project</h2>
+
+<p>Unfortunately, eclipse won't give you the option of importing a repository as a gradle project after cloning it, so we have to do it manually.</p>
+
+<ul>
+<li>Go to <em>File</em> &gt; <em>Import</em> and select <em>Gradle</em> &gt; <em>Gradle Project</em>
+</li>
+<li>Click <em>Next &gt;</em>
+</li>
+<li>Set the Project root directory to the directory you used when cloning the git repository and click <em>Next &gt;</em>
+</li>
+<li>This project does not have a gradle wrapper, so set the gradle distribution to <em>Sepcific Gradle version</em>
+</li>
+<li>Set the Java home directory to where your IBM JVM is installed</li>
+<li>Click <em>Next &gt;</em>
+</li>
+<li>Wait for buildship to finish downloading Gradle and reading your build file and click <em>Finish</em>
+</li>
+</ul>
+
+<p>On the Gradle Tasks view, open <em>simple-calculator</em> &gt; <em>build</em> and double-click <em>build</em>.
+In the console view, you should now see the build failing</p>
+
+<h1>
+<a id="adding-dependencies" class="anchor" href="#adding-dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Adding dependencies</h1>
+
+<p>Our build does not run because our application requires some dependencies which aren't declared in the build.gradle file.</p>
+
+<ul>
+<li>The application requires parboiled-java 1.1.7</li>
+<li>The unit tests additionally require JUnit 4.12</li>
+</ul>
+
+<p>We're going to fetch our dependencies from [maven central]. If you go to the page of the artifact you want to include,
+it will helpfully give you a line to add to your gradle file to add the artifact as a dependency of your main code.</p>
+
+<p>Open build.gradle and add the following code:</p>
+
+<pre><code>repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.parboiled:parboiled-java:1.1.7'
+
+    testCompile 'junit:junit:4.12'
+}
+</code></pre>
+
+<p>Note that we use <code>compile</code> for dependencies of our application and <code>testCompile</code> for dependencies of our unit tests.
+Gradle calls these groupings of dependencies <strong>configurations</strong>. A list of configurations added by the Java plugin and how they're used can be found [in the user guide].</p>
+
+<p>Now go to the <strong>Gradle Tasks</strong> view again, open <strong>simple-calculator</strong> &gt; <strong>build</strong> and double-click <strong>build</strong>. This time you should see the build complete successfully.</p>
+
+<p>But where's our output? Here again, the user guide will tell us that java artifacts are built in build/lib, but by default this folder is hidden in the project explorer in Eclipse.
+Click the down arrow in the Project Explorer view and select <strong>Customize view...</strong> (or <strong>Filters...</strong> in the Package Explorer view), uncheck <strong>Gradle build folder</strong> and click <strong>OK</strong>.
+Now our jar should show up under <code>build/libs</code>.</p>
+
+<h1>
+<a id="packaging-an-application" class="anchor" href="#packaging-an-application" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Packaging an application</h1>
+
+<p>Ok, now let's build a user-friendly package for our application...
+Fortunately, gradle's Application plugin does most of the work for us here including creating .bat and shell scripts to launch java with the correct classpath
+to run our app and creating an archive which includes all our library dependencies.</p>
+
+<p>From the [Application plugin page] in the user guide, we see that in addition to applying the plugin, we must also set the <code>mainClassName</code> property.</p>
+
+<p>In build.gradle, replace the top section of the file with this:</p>
+
+<pre><code>apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'uk.co.azquelt.simplecalc.Main'
+</code></pre>
+
+<p>From the gradle tasks view, build the project again.</p>
+
+<p>In our project, we should now have <code>build/distributions/gradle-workshop.zip</code> which contains a zipped up directory with a script to run our application.</p>
+
+<p>Although gradle-workshop is a descriptive name for the project, it's not a great name for the built application so let's change that.
+The [application plugin] notes that it adds some properties which we can find on the <a href="https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#N14431">Project API</a>.
+This tells us that there is an <code>applicationName</code> property which we can set. Similarly, on the <a href="https://docs.gradle.org/current/userguide/java_plugin.html#N1529B">Java Plugin page</a> we find the <code>archivesBaseName</code> property which will control the name of our compiled jar.</p>
+
+<p>Set both of these properties in the gradle.build file:</p>
+
+<pre><code>applicationName = 'simple-calc'
+archivesBaseName = applicationName
+</code></pre>
+
+<p>Build the project again, and we see that everything is now named <code>simple-calc</code> instead of <code>gradle-workshop</code></p>
+
+<h1>
+<a id="running-integration-tests" class="anchor" href="#running-integration-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running integration tests</h1>
+
+<p>Our project has some integration tests under <code>src/integrationTest/java</code>. You might not have noticed them because
+they're not mentioned in the build.gradle file and don't show up as a Java source folder. Let's fix that and make sure they get run when we do our build.</p>
+
+<h2>
+<a id="adding-a-source-set" class="anchor" href="#adding-a-source-set" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Adding a source set</h2>
+
+<p>First, let's tell gradle about the source code. The Java plugin has support for additional <a href="https://docs.gradle.org/current/userguide/java_plugin.html#N14E7A">source sets</a> and will automatically add new tasks and configurations (remember these from earlier?)
+for each new source set that you add. These are explained further down in the [tasks] and [dependency management] sections of the user guide.</p>
+
+<p>Add this section near the top of the build.gradle file. It needs to come before the <code>dependencies</code> block.</p>
+
+<pre><code>sourceSets {
+    integrationTest
+}
+</code></pre>
+
+<p>We also need to add the same JUnit dependency to the integrationTestCompile configuration:</p>
+
+<pre><code>dependencies {
+    compile 'org.parboiled:parboiled-java:1.1.7'
+
+    testCompile 'junit:junit:4.12'
+
+    integrationTestCompile 'junit:junit:4.12'
+}
+</code></pre>
+
+<p>Now right-click on the project &gt; <em>Gradle</em> &gt; <em>Refresh Gradle project</em> and you should see the new integrationTest source folder appear.</p>
+
+<p>[image]</p>
+
+<h2>
+<a id="running-the-tests" class="anchor" href="#running-the-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the tests</h2>
+
+<p>However, if we run the <code>build</code> task again, we don't see the integration tests mentioned at all! This is because although we have some new tasks, they're not in the task graph so they can't be executed by the build task.</p>
+
+<p>Let's have a look at the task graph for the Java plugin (in green) (from the <a href="https://docs.gradle.org/current/userguide/java_plugin.html#N14E92">user guide</a>) along with the new tasks that have been added for our source set.</p>
+
+<p>[image from dot]</p>
+
+<p>So the next question is where should they go?</p>
+
+<p>Well, the only time we need to build the integration tests is when we're going to run the integration tests so they should be a dependency of the task that runs the tests.
+But wait, we don't have a task that runs the tests yet! We need to create this new task and then we can link all of our tasks into the task graph like this:</p>
+
+<p>[image from dot]</p>
+
+<p>So let's start by adding the new <code>integrationTest</code> task:</p>
+
+<pre><code>task integrationTest(type: Test) {
+    dependsOn integrationTestClasses
+    dependsOn installDist
+
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+</code></pre>
+
+<p>By referencing the <a href="https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html">Test task type DSL documentation</a>, we can see that we need to set up both the directory of test classes, and the classpath. Fortunately, we can get both of those from the <a href="https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/SourceSet.html">SourceSet interface</a> which we can get through the <a href="https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:sourceSets">sourceSets property</a> on the project.</p>
+
+<p>As well as having the integration tests, we also need the application which the tests will run. To do this we depend on the <code>installDist</code> task from the Application plugin which extracts the distribution archive to <code>build/install/projectName</code>.</p>
+
+<p>Lastly, to get our task graph looking the way we want it, we also need to have the <code>check</code> task depend on our new <code>integrationTest</code> task.</p>
+
+<pre><code>check.dependsOn integrationTest
+</code></pre>
+
+<p>This very short example shows how we can add configuration to a task which has already been created by the plugin. If we wanted to add more configuration options, we could also use the form</p>
+
+<pre><code>check {
+    dependsOn integrationTest
+    /* ... */
+}
+</code></pre>
+
+<p>Now run the <code>build</code> task again, and you should see it build and run the all the tests.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Azquelt/gradle-workshop">Gradle-workshop</a> is maintained by <a href="https://github.com/Azquelt">Azquelt</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
