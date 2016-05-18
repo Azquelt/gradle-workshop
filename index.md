@@ -18,7 +18,7 @@ We're going to set up the workshop by installing the buildship plugin and clonin
 * Click the Open perspective button
 * Select the **Git** perspective
 * Click the button to **Clone a Git Repository**
-* Set the URI to **placeholder** and click **Next >**
+* Set the URI to **https://github.com/Azquelt/gradle-workshop.git** and click **Next >**
 * Select the **master** branch and click **Next >**
 * Choose a directory to store the checked out code
   * this should **not** be in your eclipse workspace
@@ -147,7 +147,7 @@ Now right-click on the project > *Gradle* > *Refresh Gradle project* and you sho
 
 However, if we run the `build` task again, we don't see the integration tests mentioned at all! This is because although we have some new tasks, they're not in the task graph so they can't be executed by the build task.
 
-Let's have a look at the task graph for the Java plugin (in green) (from the [user guide][task graph]) along with the new tasks that have been added for our source set.
+Let's have a look at the task graph for the Java plugin (in green) taken from the [user guide][java tasks], along with the new tasks that have been added for our source set (in orange).
 
 ![Task graph for Java plugin next to tasks for integration tests](images/tasks1.svg)
 
@@ -197,7 +197,7 @@ Now run the `build` task again, and you should see it build and run the all the 
 [java properties]: https://docs.gradle.org/current/userguide/java_plugin.html#N1529B
 [source sets]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E7A
 [java configurations]: https://docs.gradle.org/current/userguide/java_plugin.html#sec:java_plugin_and_dependency_management
-[task graph]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E92
+[java tasks]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E92
 [sourceset interface]: https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/SourceSet.html
 [sourceSets property]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:sourceSets
 [test task type]: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
