@@ -115,7 +115,7 @@ they're not mentioned in the build.gradle file and don't show up as a Java sourc
 
 ## Adding a source set
 
-First, let's tell gradle about the source code. The Java plugin has support for additional [source sets][source sets] and will automatically add new tasks and configurations (remember these from earlier?)
+First, let's tell gradle about the source code. The Java plugin has support for additional [source sets][java source sets] and will automatically add new tasks and configurations (remember these from earlier?)
 for each new source set that you add. These are explained further down in the [tasks] and [dependency management] sections of the user guide.
 
 Add this section near the top of the build.gradle file. It needs to come before the `dependencies` block.
@@ -171,7 +171,7 @@ task integrationTest(type: Test) {
 }
 ```
 
-By referencing the [Test task type DSL documentation][test task type], we can see that we need to set up both the directory of test classes, and the classpath. Fortunately, we can get both of those from the [SourceSet interface][sourceset interface] which we can get through the [sourceSets property][sourceSets property] on the project.
+By referencing the [Test task type DSL documentation][dsl test task type], we can see that we need to set up both the directory of test classes, and the classpath. Fortunately, we can get both of those from the [SourceSet interface][api sourceset interface] which we can get through the [sourceSets property][dsl sourceSets property] on the project.
 
 As well as having the integration tests, we also need the application which the tests will run. To do this we depend on the `installDist` task from the Application plugin which extracts the distribution archive to `build/install/projectName`.
 
@@ -195,13 +195,13 @@ check {
 Now run the `build` task again, and you should see it build and run the all the tests.
 
 [java properties]: https://docs.gradle.org/current/userguide/java_plugin.html#N1529B
-[source sets]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E7A
+[java source sets]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E7A
 [java configurations]: https://docs.gradle.org/current/userguide/java_plugin.html#sec:java_plugin_and_dependency_management
 [java tasks]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E92
-[sourceset interface]: https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/SourceSet.html
-[sourceSets property]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:sourceSets
-[test task type]: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
+[application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
+[api sourceset interface]: https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/SourceSet.html
+[dsl sourceSets property]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:sourceSets
+[dsl test task type]: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
 [parboiled]: http://parboiled.org
 [maven central]: http://search.maven.org/
-[application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
 [api application properties]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#N14431
