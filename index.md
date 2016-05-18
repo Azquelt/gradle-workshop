@@ -8,46 +8,47 @@ title: {{ site.name }}
 We're going to set up the workshop by installing the buildship plugin and cloning the workshop repository from github. I'm using Eclipse Mars SR2 (4.5.2) and the latest version of buildship.
 
 ## Installing buildship
-* Go to *Help* > *Eclipse Marketplace...*
-* Search for "*buildship*"
-* Click the *Install* button
+* Go to **Help** > **Eclipse Marketplace...**
+* Search for "**buildship**"
+* Click the **Install** button
 * Continue through the wizard, accepting the license
 * Restart Eclipse when prompted
 
 ## Cloning the workshop
 * Click the Open perspective button
-* Select the *Git* perspective
-* Click the button to *Clone a Git Repository*
-* Set the URI to *placeholder* and click *Next >*
-* Select the *master* branch and click *Next >*
+* Select the **Git** perspective
+* Click the button to **Clone a Git Repository**
+* Set the URI to **placeholder** and click **Next >**
+* Select the **master** branch and click **Next >**
 * Choose a directory to store the checked out code
- * this should *not* be in your eclipse workspace
+ * this should **not** be in your eclipse workspace
 
 ## Importing the project
 
 Unfortunately, eclipse won't give you the option of importing a repository as a gradle project after cloning it, so we have to do it manually.
 
-* Go to *File* > *Import* and select *Gradle* > *Gradle Project*
-* Click *Next >*
-* Set the Project root directory to the directory you used when cloning the git repository and click *Next >*
-* This project does not have a gradle wrapper, so set the gradle distribution to *Sepcific Gradle version*
+* Go to **File** > **Import** and select **Gradle** > **Gradle Project**
+* Click **Next >**
+* Set the Project root directory to the directory you used when cloning the git repository and click **Next >**
+* This project does not have a gradle wrapper, so set the gradle distribution to **Sepcific Gradle version**
 * Set the Java home directory to where your IBM JVM is installed
-* Click *Next >*
-* Wait for buildship to finish downloading Gradle and reading your build file and click *Finish*
+* Click **Next >**
+* Wait for buildship to finish downloading Gradle and reading your build file and click **Finish**
 
-On the Gradle Tasks view, open *simple-calculator* > *build* and double-click *build*.
+On the Gradle Tasks view, open **simple-calculator** > **build** and double-click **build**.
 In the console view, you should now see the build failing
 
 # Adding dependencies
 
 Our build does not run because our application requires some dependencies which aren't declared in the build.gradle file.
-* The application requires parboiled-java 1.1.7
+* The application requires [parboiled][parboiled] 1.1.7
 * The unit tests additionally require JUnit 4.12
 
-We're going to fetch our dependencies from [maven central]. If you go to the page of the artifact you want to include,
+We're going to fetch our dependencies from [maven central][maven central]. If you go to the page of the artifact you want to include,
 it will helpfully give you a line to add to your gradle file to add the artifact as a dependency of your main code.
 
 Open build.gradle and add the following code:
+
 ```
 repositories {
 	mavenCentral()
@@ -184,3 +185,5 @@ Now run the `build` task again, and you should see it build and run the all the 
 [sourceset interface]: https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/SourceSet.html
 [sourceSets property]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:sourceSets
 [test task type]: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
+[parboiled]: http://parboiled.org
+[maven central]: http://search.maven.org/
