@@ -1,0 +1,25 @@
+digraph tasks
+{
+  rankdir=LR
+  node [shape = "box", fillcolor = lightgreen, style=filled]
+  build -> assemble
+  assemble -> jar
+  installDist -> startScripts
+  installDist -> jar
+  uploadArchives -> jar
+  jar -> classes
+  build -> check
+  check -> test
+  test -> classes
+  test -> testClasses
+  testClasses -> compileTestJava
+  testClasses -> processTestResources
+  compileTestJava -> classes
+  classes -> compileJava
+  classes -> processResources
+
+  node [fillcolor = orange]
+
+  integrationTestClasses -> compileIntegrationTestJava
+  integrationTestClasses -> processIntegrationTestResources
+}

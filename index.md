@@ -21,7 +21,7 @@ We're going to set up the workshop by installing the buildship plugin and clonin
 * Set the URI to **placeholder** and click **Next >**
 * Select the **master** branch and click **Next >**
 * Choose a directory to store the checked out code
- * this should **not** be in your eclipse workspace
+  * this should **not** be in your eclipse workspace
 
 ## Importing the project
 
@@ -143,14 +143,14 @@ However, if we run the `build` task again, we don't see the integration tests me
 
 Let's have a look at the task graph for the Java plugin (in green) (from the [user guide][task graph]) along with the new tasks that have been added for our source set.
 
-[image from dot]
+![Task graph for Java plugin next to tasks for integration tests](images/tasks1.svg)
 
 So the next question is where should they go?
 
 Well, the only time we need to build the integration tests is when we're going to run the integration tests so they should be a dependency of the task that runs the tests.
 But wait, we don't have a task that runs the tests yet! We need to create this new task and then we can link all of our tasks into the task graph like this:
 
-[image from dot]
+![Integration test tasks integrated into task graph](images/tasks2.svg)
 
 So let's start by adding the new `integrationTest` task:
 

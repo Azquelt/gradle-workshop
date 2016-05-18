@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for i in *.gv
+do
+    dot $i -Tsvg > ../images/${i%.gv}.svg
+done
