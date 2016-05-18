@@ -41,6 +41,7 @@ In the console view, you should now see the build failing
 # Adding dependencies
 
 Our build does not run because our application requires some dependencies which aren't declared in the build.gradle file.
+
 * The application requires [parboiled][parboiled] 1.1.7
 * The unit tests additionally require JUnit 4.12
 
@@ -62,7 +63,7 @@ dependencies {
 ```
 
 Note that we use `compile` for dependencies of our application and `testCompile` for dependencies of our unit tests.
-Gradle calls these groupings of dependencies **configurations**. A list of configurations added by the Java plugin and how they're used can be found [in the user guide].
+Gradle calls these groupings of dependencies **configurations**. A list of configurations added by the Java plugin and how they're used can be found [in the user guide][java configurations].
 
 Now go to the **Gradle Tasks** view again, open **simple-calculator** > **build** and double-click **build**. This time you should see the build complete successfully.
 
@@ -72,13 +73,16 @@ Now our jar should show up under `build/libs`.
 
 # Packaging an application
 
-Ok, now let's build a user-friendly package for our application...
+Ok, now let's build a user-friendly package for our application.
+
 Fortunately, gradle's Application plugin does most of the work for us here including creating .bat and shell scripts to launch java with the correct classpath
 to run our app and creating an archive which includes all our library dependencies.
 
-From the [Application plugin page] in the user guide, we see that in addition to applying the plugin, we must also set the `mainClassName` property.
+From the [Application plugin page][application plugin] in the user guide, we see that in addition to applying the plugin, we must also set the `mainClassName` property.
 
-In build.gradle, replace the top section of the file with this:
+In `build.gradle`, replace the top section of the file with this:
+
+
 ```
 apply plugin: 'java'
 apply plugin: 'application'
@@ -91,10 +95,11 @@ From the gradle tasks view, build the project again.
 In our project, we should now have `build/distributions/gradle-workshop.zip` which contains a zipped up directory with a script to run our application.
 
 Although gradle-workshop is a descriptive name for the project, it's not a great name for the built application so let's change that.
-The [application plugin] notes that it adds some properties which we can find on the [Project API](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#N14431).
-This tells us that there is an `applicationName` property which we can set. Similarly, on the [Java Plugin page][Java properties] we find the `archivesBaseName` property which will control the name of our compiled jar.
+The [application plugin page][application plugin] notes that it adds some properties which we can find on the [Project API][api application properties].
+This tells us that there is an `applicationName` property which we can set. Similarly, on the [Java Plugin page][java properties] we find the `archivesBaseName` property which will control the name of our compiled jar.
 
 Set both of these properties in the gradle.build file:
+
 
 ```
 applicationName = 'simple-calc'
@@ -122,6 +127,7 @@ sourceSets {
 ```
 
 We also need to add the same JUnit dependency to the integrationTestCompile configuration:
+
 
 ```
 dependencies {
@@ -154,6 +160,7 @@ But wait, we don't have a task that runs the tests yet! We need to create this n
 
 So let's start by adding the new `integrationTest` task:
 
+
 ```
 task integrationTest(type: Test) {
 	dependsOn integrationTestClasses
@@ -170,11 +177,13 @@ As well as having the integration tests, we also need the application which the 
 
 Lastly, to get our task graph looking the way we want it, we also need to have the `check` task depend on our new `integrationTest` task.
 
+
 ```
 check.dependsOn integrationTest
 ```
 
 This very short example shows how we can add configuration to a task which has already been created by the plugin. If we wanted to add more configuration options, we could also use the form
+
 
 ```
 check {
@@ -185,11 +194,14 @@ check {
 
 Now run the `build` task again, and you should see it build and run the all the tests.
 
-[Java properties]: https://docs.gradle.org/current/userguide/java_plugin.html#N1529B
+[java properties]: https://docs.gradle.org/current/userguide/java_plugin.html#N1529B
 [source sets]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E7A
+[java configurations]: https://docs.gradle.org/current/userguide/java_plugin.html#sec:java_plugin_and_dependency_management
 [task graph]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E92
 [sourceset interface]: https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/SourceSet.html
 [sourceSets property]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:sourceSets
 [test task type]: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
 [parboiled]: http://parboiled.org
 [maven central]: http://search.maven.org/
+[application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
+[api application properties]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#N14431
