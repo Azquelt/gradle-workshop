@@ -1,0 +1,17 @@
+# Setup
+title:        Gradle-workshop
+tagline:      An interactive introduction
+baseurl:      "/gradle-workshop"
+paginate:     1
+
+# About/contact
+author:
+  name:       Andrew Rouse
+  url:        http://github.com/Azquelt 
+
+# Gems
+gems:
+  - jekyll-paginate
+
+#Others
+markdown: kramdown
