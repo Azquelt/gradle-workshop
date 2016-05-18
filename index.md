@@ -95,6 +95,7 @@ The [application plugin] notes that it adds some properties which we can find on
 This tells us that there is an `applicationName` property which we can set. Similarly, on the [Java Plugin page][Java properties] we find the `archivesBaseName` property which will control the name of our compiled jar.
 
 Set both of these properties in the gradle.build file:
+
 ```
 applicationName = 'simple-calc'
 archivesBaseName = applicationName
@@ -113,6 +114,7 @@ First, let's tell gradle about the source code. The Java plugin has support for 
 for each new source set that you add. These are explained further down in the [tasks] and [dependency management] sections of the user guide.
 
 Add this section near the top of the build.gradle file. It needs to come before the `dependencies` block.
+
 ```
 sourceSets {
 	integrationTest
@@ -120,6 +122,7 @@ sourceSets {
 ```
 
 We also need to add the same JUnit dependency to the integrationTestCompile configuration:
+
 ```
 dependencies {
 	compile 'org.parboiled:parboiled-java:1.1.7'
@@ -150,6 +153,7 @@ But wait, we don't have a task that runs the tests yet! We need to create this n
 [image from dot]
 
 So let's start by adding the new `integrationTest` task:
+
 ```
 task integrationTest(type: Test) {
 	dependsOn integrationTestClasses
@@ -165,11 +169,13 @@ By referencing the [Test task type DSL documentation][test task type], we can se
 As well as having the integration tests, we also need the application which the tests will run. To do this we depend on the `installDist` task from the Application plugin which extracts the distribution archive to `build/install/projectName`.
 
 Lastly, to get our task graph looking the way we want it, we also need to have the `check` task depend on our new `integrationTest` task.
+
 ```
 check.dependsOn integrationTest
 ```
 
 This very short example shows how we can add configuration to a task which has already been created by the plugin. If we wanted to add more configuration options, we could also use the form
+
 ```
 check {
     dependsOn integrationTest
