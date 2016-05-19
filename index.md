@@ -235,13 +235,21 @@ _Note: if your integration tests don't pass, first check that the name of your a
 This is the end of the guided workshop, we've successfully created a Gradle build file to build our application into a distributable package and run the associated unit and integration tests.
 
 Here are some possible projects if you'd like to explore Gradle further:
+
 * Update the build script so that it always runs the unit tests before the integration tests
+
 * Create a [Gradle wrapper][wrapper plugin] for your project so that developers don't have to have Gradle set up to build your project
+
 * Version your application and deploy it to a maven repository
+
 * Build a Java EE app using the [War][war plugin] and [Ear][ear plugin] plugins
+
 * Use the [Liberty plugin][liberty plugin] to deploy your app to a Liberty server
+
 * Write integration tests and have your build start the server, deploy your app, run the tests and then clean up after itself
+
 * Turn your integration test tasks into a plugin with its own configuration block so it can easily be applied to your next Java EE project (don't forget to document it so you remember how it works)
+
 
 [java properties]: https://docs.gradle.org/current/userguide/java_plugin.html#N1529B
 [java source sets]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E7A
