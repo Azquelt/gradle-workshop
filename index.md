@@ -3,9 +3,13 @@ layout: default
 title: {{ site.name }}
 ---
 
+# Introduction
+
+This short workshop will guide you through creating a Gradle build file for an existing Java application, including building a distributable package and running integration tests.
+
 # Setting up
 
-We're going to set up the workshop by installing the buildship plugin and cloning the workshop repository from github. I'm using Eclipse Mars SR2 (4.5.2) and the latest version of buildship.
+This workshop is based on Eclipse and uses the Buildship plugin which provides support for developing Gradle projects. When writing this workshop, I used Eclipse Mars 2 (4.5.2).
 
 ## Installing buildship
 
@@ -24,6 +28,7 @@ We're going to set up the workshop by installing the buildship plugin and clonin
 * Restart Eclipse when prompted
 
 ## Cloning the workshop
+
 * Click the Open perspective button
 
   ![Open perspective button][pic-open-perspective]

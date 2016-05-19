@@ -1,6 +1,6 @@
 # Setup
 title:        Gradle-workshop
-tagline:      An interactive introduction
+tagline:      An interactive introduction to using Gradle
 baseurl:      "/gradle-workshop"
 paginate:     1
 
