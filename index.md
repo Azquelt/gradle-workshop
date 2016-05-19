@@ -9,15 +9,19 @@ We're going to set up the workshop by installing the buildship plugin and clonin
 
 ## Installing buildship
 * Go to **Help** > **Eclipse Marketplace...**
+  ![Eclipse marketplace menu][pic-installsoftware]
 * Search for "**buildship**"
 * Click the **Install** button
+  ![Buildship entry][pic-buildship]
 * Continue through the wizard, accepting the license
 * Restart Eclipse when prompted
 
 ## Cloning the workshop
 * Click the Open perspective button
+  ![Open perspective button][pic-open-perspective]
 * Select the **Git** perspective
 * Click the button to **Clone a Git Repository**
+  ![Clone repository button][pic-clone]
 * Set the URI to **https://github.com/Azquelt/gradle-workshop.git** and click **Next >**
 * Select the **master** branch and click **Next >**
 * Choose a directory to store the checked out code
@@ -139,9 +143,9 @@ dependencies {
 }
 ```
 
-Now right-click on the project > *Gradle* > *Refresh Gradle project* and you should see the new integrationTest source folder appear.
+Now right-click on the project > **Gradle** > **Refresh Gradle project** and you should see the new integrationTest source folder appear.
 
-[image]
+![IntegrationTest source folder][pic-integrationtest]
 
 ## Running the tests
 
@@ -205,3 +209,9 @@ Now run the `build` task again, and you should see it build and run the all the 
 [parboiled]: http://parboiled.org
 [maven central]: http://search.maven.org/
 [api application properties]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#N14431
+
+[pic-installsoftware]: images/01-installsoftware.png
+[pic-buildship]: images/02-buildship.png
+[pic-open-perspective]: images/03-open-perspective.png
+[pic-clone]: images/04-clone.png
+[pic-integrationtest]: images/10-integrationTest.png
