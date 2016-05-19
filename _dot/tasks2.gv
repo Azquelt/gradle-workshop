@@ -1,9 +1,9 @@
 digraph tasks
 {
   rankdir=LR
-  node [shape = "box", fillcolor = lightgreen, style=filled]
-  build -> assemble
+  node [shape = "box", fillcolor = lightgreen, style=filled, fontname="helvetica"]
   build -> check
+  build -> assemble
   check -> test
   test -> classes
   test -> testClasses

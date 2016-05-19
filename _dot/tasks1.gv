@@ -1,14 +1,14 @@
 digraph tasks
 {
   rankdir=LR
-  node [shape = "box", fillcolor = lightgreen, style=filled]
+  node [shape = "box", fillcolor = lightgreen, style=filled, fontname="helvetica"]
+  build -> check
   build -> assemble
   assemble -> jar
   installDist -> startScripts
   installDist -> jar
   uploadArchives -> jar
   jar -> classes
-  build -> check
   check -> test
   test -> classes
   test -> testClasses
