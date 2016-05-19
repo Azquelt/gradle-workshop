@@ -196,9 +196,17 @@ task integrationTest(type: Test) {
 }
 ```
 
-By referencing the [Test task type DSL documentation][dsl test task type], we can see that we need to set up both the directory of test classes, and the classpath. Fortunately, we can get both of those from the [SourceSet interface][api sourceset interface] which we can get through the [sourceSets property][dsl sourceSets property] on the project.
+Let's break down what's going on here.
 
-As well as having the integration tests, we also need the application which the tests will run. To do this we depend on the `installDist` task from the Application plugin which extracts the distribution archive to `build/install/projectName`.
+Using the `task` keyword, we're creating a new task named "integrationTest" and we're using the `Test` task type because we want to run JUnit tests.
+
+We then need to configure the test task using the methods and properties listed in the [Test task type DSL documentation][dsl test task type]. Here the essential settings are `testClassesDir` to tell the task where our tests are and `classpath` to define the classpath needed to run the tests.
+
+We could define both of these manually but it's easier to pull this information from the source set which we created earlier because Gradle knows where the class files are and has computed the classpath from the dependencies we defined earlier.
+
+We look up the source set by name from the [sourceSets property][dsl sourceSets property] and can then call any of the methods on the [SourceSet interface][api sourceset interface] to get the information we want.
+
+We also set up the task dependencies needed for our `integrationTest` task to make sure that everything it needs to run is available. To ensure that the test classes have been compiled, we depend on `integrationTestClasses`. We also need the application available so that the tests can run it so we also depend on the `installDist` task from the Application plugin which extracts the distribution archive to `build/install/projectName`.
 
 Lastly, to get our task graph looking the way we want it, we also need to have the `check` task depend on our new `integrationTest` task.
 
@@ -217,7 +225,22 @@ check {
 }
 ```
 
+It's important to note here that when we're *creating* a task, we use the `task` keyword, but when we're configuring an *existing* task we don't.
+
 Now run the `build` task again, and you should see it build and run the all the tests.
+
+# Further information
+
+This is the end of the guided workshop, we've successfully created a Gradle build file to build our application into a distributable package and run the associated unit and integration tests.
+
+Here are some possible projects if you'd like to explore Gradle further:
+* Update the build script so that it always runs the unit tests before the integration tests
+* Create a [Gradle wrapper][wrapper plugin] for your project so that developers don't have to have Gradle set up to build your project
+* Version your application and deploy it to a maven repository
+* Build a Java EE app using the [War][war plugin] and [Ear][ear plugin] plugins
+* Use the [Liberty plugin][liberty plugin] to deploy your app to a Liberty server
+* Write integration tests and have your build start the server, deploy your app, run the tests and then clean up after itself
+* Turn your integration test tasks into a plugin with its own configuration block so it can easily be applied to your next Java EE project (don't forget to document it so you remember how it works)
 
 [java properties]: https://docs.gradle.org/current/userguide/java_plugin.html#N1529B
 [java source sets]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E7A
@@ -230,6 +253,10 @@ Now run the `build` task again, and you should see it build and run the all the 
 [parboiled]: http://parboiled.org
 [maven central]: http://search.maven.org/
 [api application properties]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#N14431
+[wrapper plugin]: https://docs.gradle.org/current/userguide/wrapper_plugin.html
+[war plugin]: https://docs.gradle.org/current/userguide/war_plugin.html
+[ear plugin]: https://docs.gradle.org/current/userguide/ear_plugin.html
+[liberty plugin]: https://github.com/WASdev/ci.gradle
 
 [pic-installsoftware]: images/01-installsoftware.png
 [pic-buildship]: images/02-buildship.png
