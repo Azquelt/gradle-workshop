@@ -8,23 +8,38 @@ title: {{ site.name }}
 We're going to set up the workshop by installing the buildship plugin and cloning the workshop repository from github. I'm using Eclipse Mars SR2 (4.5.2) and the latest version of buildship.
 
 ## Installing buildship
+
 * Go to **Help** > **Eclipse Marketplace...**
+
   ![Eclipse marketplace menu][pic-installsoftware]
+  
 * Search for "**buildship**"
+
 * Click the **Install** button
+
   ![Buildship entry][pic-buildship]
+  
 * Continue through the wizard, accepting the license
+
 * Restart Eclipse when prompted
 
 ## Cloning the workshop
 * Click the Open perspective button
+
   ![Open perspective button][pic-open-perspective]
+  
 * Select the **Git** perspective
+
 * Click the button to **Clone a Git Repository**
+
   ![Clone repository button][pic-clone]
+  
 * Set the URI to **https://github.com/Azquelt/gradle-workshop.git** and click **Next >**
+
 * Select the **master** branch and click **Next >**
+
 * Choose a directory to store the checked out code
+
   * this should **not** be in your eclipse workspace
 
 ## Importing the project
@@ -32,11 +47,17 @@ We're going to set up the workshop by installing the buildship plugin and clonin
 Unfortunately, eclipse won't give you the option of importing a repository as a gradle project after cloning it, so we have to do it manually.
 
 * Go to **File** > **Import** and select **Gradle** > **Gradle Project**
+
 * Click **Next >**
+
 * Set the Project root directory to the directory you used when cloning the git repository and click **Next >**
+
 * This project does not have a gradle wrapper, so set the gradle distribution to **Sepcific Gradle version**
+
 * Set the Java home directory to where your IBM JVM is installed
+
 * Click **Next >**
+
 * Wait for buildship to finish downloading Gradle and reading your build file and click **Finish**
 
 On the Gradle Tasks view, open **simple-calculator** > **build** and double-click **build**.
