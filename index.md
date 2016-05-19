@@ -63,6 +63,8 @@ Unfortunately, eclipse won't give you the option of importing a repository as a 
 On the Gradle Tasks view, open **simple-calculator** > **build** and double-click **build**.
 In the console view, you should now see the build failing
 
+_Note: if you can't see the gradle tasks view, you can open it by going to **Window** > **Show View** > **Other...** > **Gradle** > **Gradle Tasks**_
+
 # Adding dependencies
 
 Our build does not run because our application requires some dependencies which aren't declared in the build.gradle file.
@@ -100,10 +102,9 @@ Now our jar should show up under `build/libs`.
 
 Ok, now let's build a user-friendly package for our application.
 
-Fortunately, gradle's Application plugin does most of the work for us here including creating .bat and shell scripts to launch java with the correct classpath
-to run our app and creating an archive which includes all our library dependencies.
+Fortunately, gradle's Application plugin does most of the work for us here including creating .bat and shell scripts to launch java with the correct classpath to run our app and creating an archive which includes all our library dependencies.
 
-From the [Application plugin page][application plugin] in the user guide, we see that in addition to applying the plugin, we must also set the `mainClassName` property.
+The [Application plugin page][application plugin] in the user guide tells us that we must apply the plugin and set the `mainClassName` property.
 
 In `build.gradle`, replace the top section of the file with this:
 
@@ -115,23 +116,21 @@ apply plugin: 'application'
 mainClassName = 'uk.co.azquelt.simplecalc.Main'
 ```
 
-From the gradle tasks view, build the project again.
+From the Gradle tasks view, build the project again.
 
 In our project, we should now have `build/distributions/gradle-workshop.zip` which contains a zipped up directory with a script to run our application.
 
-Although gradle-workshop is a descriptive name for the project, it's not a great name for the built application so let's change that.
-The [application plugin page][application plugin] notes that it adds some properties which we can find on the [Project API][api application properties].
-This tells us that there is an `applicationName` property which we can set. Similarly, on the [Java Plugin page][java properties] we find the `archivesBaseName` property which will control the name of our compiled jar.
+Although gradle-workshop is a descriptive name for the project, it's not a great name for the built application so let's change that. The [application plugin page][application plugin] notes that it adds some properties which we can find on the [Project API][api application properties]. This tells us that there is an `applicationName` property which we can set. Similarly, on the [Java Plugin page][java properties] we find the `archivesBaseName` property which will control the name of our compiled jar.
 
 Set both of these properties in the gradle.build file:
 
 
 ```
-applicationName = 'simple-calc'
+applicationName = 'simple-calculator'
 archivesBaseName = applicationName
 ```
 
-Build the project again, and we see that everything is now named `simple-calc` instead of `gradle-workshop`
+Build the project again, and we see that everything is now named `simple-calculator` instead of `gradle-workshop`
 
 # Running integration tests
 
@@ -228,6 +227,8 @@ check {
 It's important to note here that when we're *creating* a task, we use the `task` keyword, but when we're configuring an *existing* task we don't.
 
 Now run the `build` task again, and you should see it build and run the all the tests.
+
+_Note: if your integration tests don't pass, first check that the name of your application (which you specified earlier) matches the application name in the **RunApplication.java** file._
 
 # Further information
 
