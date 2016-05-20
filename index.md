@@ -105,7 +105,7 @@ At this point, even though we've added the dependencies to the `build.gradle` fi
 
 Now go to the **Gradle Tasks** view again, open **gradle-workshop** > **build** and double-click **build**. This time you should see the build complete successfully.
 
-But where's our output? Here again, the user guide will tell us that java artifacts are built in build/lib, but by default this folder is hidden in the project explorer in Eclipse.
+But where's our output? Here again, the user guide will tell us that java artifacts are built in `build/libs`, but by default this folder is hidden in the project explorer in Eclipse.
 
 Click the down arrow in the Project Explorer view and select **Customize view...** (or **Filters...** in the Package Explorer view), uncheck **Gradle build folder** and click **OK**.
 
