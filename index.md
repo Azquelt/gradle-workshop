@@ -184,7 +184,7 @@ Now right-click on the project > **Gradle** > **Refresh Gradle project** and you
 
 However, if we run the `build` task again, we don't see the integration tests mentioned at all! This is because although we have some new tasks, they're not in the task graph so they can't be executed by the build task.
 
-Let's have a look at the task graph for the Java plugin (in green) taken from the [user guide][java tasks], along with the new tasks that have been added for our source set (in orange).
+Let's have a look at the initial task graph created by the Java plugin (in green) taken from the [user guide][java tasks], along with the new tasks that have been added by the Java plugin for our source set (in orange).
 
 ![Task graph for Java plugin next to tasks for integration tests](images/tasks1.svg)
 
