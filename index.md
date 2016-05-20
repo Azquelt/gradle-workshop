@@ -113,7 +113,7 @@ Now select the **gradle-workshop** project and press **F5** and the jar should s
 
 # Packaging an application
 
-We will now build a user-friendly package for our application so that a user can download a single archive, unpack it and run like a native application.
+We will now build a user-friendly package for our application so that a user can download a single archive, unpack it and run it like a native application.
 
 Fortunately, Gradle's Application plugin does most of the work for us here including creating .bat and shell scripts to launch java with the correct classpath to run our app and creating an archive which includes all our library dependencies.
 
