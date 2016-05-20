@@ -20,15 +20,15 @@ public class ElementUtils {
 		return parsingResult.resultValue;
 	}
 
-	public static AddElement add(Element left, Element right) {
+	public static Element add(Element left, Element right) {
 		return new AddElement(left, right);
 	}
 
-	public static SubtractElement subtract(Element left, Element right) {
+	public static Element subtract(Element left, Element right) {
 		return new SubtractElement(left, right);
 	}
 
-	public static NumberElement num(int num) {
+	public static Element num(int num) {
 		return new NumberElement(num);
 	}
 
