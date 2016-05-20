@@ -39,7 +39,7 @@ public class RunApplication {
 	
 	private static Result doRun(String[] args) throws Exception {
 		List<String> command = new ArrayList<>();
-		command.add(new File(APP_DIRECTORY, APP_NAME).getAbsolutePath());
+		command.add(getAppPath());
 		command.addAll(Arrays.asList(args));
 		
 		ProcessBuilder pb = new ProcessBuilder(command);
@@ -53,6 +53,16 @@ public class RunApplication {
 		result.returnCode = process.exitValue();
 		
 		return result;
+	}
+	
+	private static String getAppPath() {
+		String appFileName = APP_NAME;
+		
+		if (System.getProperty("os.name", "").contains("Windows")) {
+			appFileName = APP_NAME + ".bat";
+		}
+		
+		return new File(APP_DIRECTORY, appFileName).getAbsolutePath();
 	}
 	
 	private static void waitForProcess(Process process) {
