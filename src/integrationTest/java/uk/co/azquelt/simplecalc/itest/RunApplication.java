@@ -1,7 +1,5 @@
 package uk.co.azquelt.simplecalc.itest;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,16 +57,10 @@ public class RunApplication {
 	
 	private static void waitForProcess(Process process) {
 		try {
-			process.waitFor(30, SECONDS);
+			process.waitFor();
 		} catch (InterruptedException ex){}
-		
-		if (process.isAlive()) {
-			try {
-				process.destroyForcibly().waitFor();
-			} catch (InterruptedException ex) {}
-		}
 	}
-
+	
 	private static String readStream(InputStream in) throws IOException {
 		Reader reader = new InputStreamReader(in);
 		char[] buf = new char[1024];
