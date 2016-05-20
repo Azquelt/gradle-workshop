@@ -43,9 +43,9 @@ This workshop is based on Eclipse and uses the Buildship plugin which provides s
 
   * _Note: you don't need to specify any credentials_
 
-* Select the **master** branch and click **Next >**
+* Make sure that the **master** branch is selected (the other branches don't matter either way) and click **Next >**
 
-* Choose a directory to store the checked out code
+* Choose a directory to store the checked out code and click **Finish**.
 
   * _Note: this should **not** be in your eclipse workspace_
   
@@ -70,7 +70,7 @@ Unfortunately, eclipse won't give you the option of importing a repository as a 
 * Wait for buildship to finish downloading Gradle and reading your build file and click **Finish**
 
 On the Gradle Tasks view, open **gradle-workshop** > **build** and double-click **build**.
-In the console view, you should now see the build failing
+In the console view, you should now see the build failing.
 
 _Note: if you can't see the Gradle Tasks view, you can open it by going to **Window** > **Show View** > **Other...** > **Gradle** > **Gradle Tasks**_
 
@@ -219,7 +219,19 @@ We could define both of these manually but it's easier to pull this information 
 
 We look up the source set by name from the [sourceSets property][dsl sourceSets property] and can then call any of the methods on the [SourceSet interface][api sourceset interface] to get the information we want.
 
-We also set up the task dependencies needed for our `integrationTest` task to make sure that everything it needs to run is available. To ensure that the test classes have been compiled, we depend on `integrationTestClasses`. We also need the application available so that the tests can run it so we depend on the `installDist` task from the Application plugin which extracts the distribution archive to `build/install/projectName`.
+We also set up the task dependencies needed for our `integrationTest` task to make sure that everything it needs to run is available. The things we need are:
+
+* the compiled test classes
+
+  * these will be produced by the `integrationTestClasses` task, added automatically by the Java plugin when we added the `integrationTest` sourceSet
+  
+  * the tasks added by the Java plugin are listed in the [user guide][java tasks]
+  
+* the built application, so that the tests can run it
+
+  * the `installDist` task, added by the Application plugin will do this for us, extracting the distribution archive to `build/install/applicationName`
+  
+  * the tasks added by the Application plugin are listed in the [user guide][application tasks]
 
 Lastly, to get our task graph looking the way we want it, we also need to have the `check` task depend on our new `integrationTest` task, which we can do by adding this line.
 
@@ -277,6 +289,7 @@ Here are some resources that you may find useful:
 [java configurations]: https://docs.gradle.org/current/userguide/java_plugin.html#sec:java_plugin_and_dependency_management
 [java tasks]: https://docs.gradle.org/current/userguide/java_plugin.html#N14E92
 [application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
+[application tasks]: https://docs.gradle.org/current/userguide/application_plugin.html#N15F3F
 [api sourceset interface]: https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/SourceSet.html
 [dsl sourceSets property]: https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:sourceSets
 [dsl test task type]: https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
