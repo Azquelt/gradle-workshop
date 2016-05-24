@@ -13,6 +13,8 @@ This workshop is based on Eclipse and uses the Buildship plugin which provides s
 
 ## Installing buildship
 
+_Note: Newer versions of Eclipse already have Buildship installed, but the version in the Eclipse Marketplace may be newer and have additional bugfixes._
+
 * Go to **Help** > **Eclipse Marketplace...**
 
   ![Eclipse marketplace menu][pic-installsoftware]
