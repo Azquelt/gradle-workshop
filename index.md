@@ -63,7 +63,7 @@ Unfortunately, eclipse won't give you the option of importing a repository as a 
 
 * Set the Project root directory to the directory you used when cloning the git repository and click **Next >**
 
-* This project does not have a gradle wrapper, so set the gradle distribution to **Sepcific Gradle version** and choose **2.13**
+* This project does not have a gradle wrapper, so set the gradle distribution to **Specific Gradle version** and choose **2.13**
 
 * Set the Java home directory to where your Java SDK is installed
 
